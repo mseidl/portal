@@ -28,11 +28,10 @@
       <tbody>
         {% if list %}
           {% for res in list %}
-          {% if res.step_fail %}
-          <tr class="danger">
-          {% else %}
-          <tr class="success">
-          {% endif %}
+
+          <tr data-res-id="{{ res.id }}" class="{{ 'danger' if
+          res.step_fail else 'success'}} portal-summary-row">
+
             <td><a href="/show/{{ res.id }}">{{ res.id }}</a></td>
             <td>{{ res.date }}</td>
             <td>{{ res.product }}</td>
@@ -43,6 +42,10 @@
             <td>{{ res.steps}}</td>
             <td>{{ res.step_pass}} / {{ res.step_fail }}</td>
           </tr>
+          <tr data-res-id="{{ res.id }}" class="portal-detail-row" hidden>
+            <td colspan="9"><p>details for {{ res.id }}</p></td>
+          </tr>
+
           {% endfor %}
         {% endif %}
     </table>
