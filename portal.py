@@ -5,7 +5,7 @@ import re
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/store/portal/portal.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///portal.db'
 db = SQLAlchemy(app)
 
 
