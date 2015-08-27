@@ -3,3 +3,4 @@ SQLAlchemy
 Flask-SQLAlchemy
 Flask-Dogpile-Cache
 jenkinsapi
+flask-socketio
