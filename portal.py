@@ -3,6 +3,8 @@ from flask.ext.sqlalchemy import SQLAlchemy
 import urllib
 import re
 
+from parser import get_stats
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///portal.db'
@@ -66,7 +68,7 @@ def add(url=None):
             version = 'head'
         if url.find('REF') >= 0:
             ref = True
-        #a.split('/')[-1][0:16].replace('_', '-').split('-')
+        # a.split('/')[-1][0:16].replace('_', '-').split('-')
         date = url.split('/')[-1][0:16]
         html = urllib.urlopen(url).read()
         stats = get_stats(html)
@@ -87,31 +89,6 @@ def add(url=None):
         return html
     else:
         return "Error"
-
-def get_stats(html):
-    results = []
-    fail = False
-    tmp = re.search('\d{1,4}\sscenarios.*\)";', html).group()
-    list = re.sub(r'[^a-zA-Z0-9]', ' ', tmp).split()
-    list.remove('br')
-    if 'failed' in list:
-        fail = True
-    results.append(list[0])
-    if fail:
-        results.append(list[2])
-        results.append(list[4])
-    else:
-        results.append(0)
-        results.append(list[2])
-    if fail:
-        results.append(list[6])
-        results.append(list[8])
-        results.append(list[10])
-    else:
-        results.append(list[4])
-        results.append(0)
-        results.append(list[6])
-    return results
 
 if __name__ == '__main__':
     host = '0.0.0.0'
